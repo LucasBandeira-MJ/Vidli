@@ -1,0 +1,34 @@
+GET http://localhost:3000/api
+
+###
+
+GET http://localhost:3000/api/6000beee8a9d583728ba8d8b
+
+###
+
+GET http://localhost:3000/api/15
+
+
+###
+
+POST http://localhost:3000/api
+Content-Type: application/json
+
+{
+    "video_provider": "youtube",
+    "video_url": "https://www.youtube.com/watch?v=uAJe8HuG2IA"
+}
+
+###
+
+DELETE http://localhost:3000/api/6000ed928e5f9f4544b3aa89
+
+###
+
+PATCH http://localhost:3000/api/6000beee8a9d583728ba8d8b
+Content-Type: application/json
+
+{
+    "favorited": false,
+    "video_status": "notwatched"
+}

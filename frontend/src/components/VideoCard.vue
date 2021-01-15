@@ -1,29 +1,29 @@
 <template>
-  <div class="video-card yt">
+  <div class="video-card yt" :class="{'favorited': favorited}">
       <div class="stats">
-          <img @click="favoriteVideo($event)" class="star" :class="{'favorite': isFavorite}" src="@/assets/img/svg/dashed-star.png" alt="estrela de favorito">
+            <img @click="favoriteVideo(videoID)" class="star" src="@/assets/img/svg/dashed-star.png" alt="estrela de favorito">
+    
 
           <div class="watched">
-              <img src="@/assets/img/svg/check-icon.svg" alt="">
+              <img @click="deleteVideo(videoID)" src="@/assets/img/svg/cross-icon.svg" alt="">
           </div>
       </div>
 
-      <img class="thumb" :src="thumb" alt="thumbnail">
+        <a :href="videoURL" target="_blank">
+            <img class="thumb" :src="thumbnail" alt="thumbnail">
+        </a>
       <p class="video-title">
           {{ title }}
       </p>
 
-      <p class="description">
-          {{ description }}
-      </p>
+      <!-- <p class="description"> {{ description }} </p> -->
 
-      <p class="duration">
-          {{ duration }}
-      </p>
+      <!-- <p class="duration"> {{ duration }} </p> -->
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: 'VideoCard',
     props: {
@@ -39,23 +39,36 @@ export default {
             type: String,
             required: false
         },
-        duration: {
+        videoID: {
             type: String,
-            required: false
+            required: true
         },
         isFavorite: {
             type: Boolean,
             default: false
+        },
+        videoURL: {
+            type: String,
+            required: true
+        }
+    },
+    methods: {
+        async favoriteVideo(videoID) {
+            this.favorited = !this.favorited;
+            
+            await axios.patch(`http://localhost:3000/api/${videoID}`, {
+                "favorited": this.favorited
+            })
+            .then((res)=> console.log(res))
+        },
+        async deleteVideo(videoID){
+            await axios.delete(`http://localhost:3000/api/${videoID}`)
+            .then(location.reload())
         }
     },
     data() {
         return {
-            thumb: require('@/assets/img/' + this.thumbnail),
-        }
-    },
-    methods: {
-        favoriteVideo(e) {
-            this.isFavorite = !this.isFavorite;
+            favorited: this.isFavorite
         }
     }
 }
@@ -65,10 +78,10 @@ export default {
 .video-card
     width: 280px
     background: #fff
-    margin: 10px 
+    margin: 10px auto
 
     &.yt
-        border-top: 5px solid red
+        border-top: 5px solid #c4302b 
 
     .star
         width: 30px
@@ -77,12 +90,12 @@ export default {
         top: 5px
         left: 5px
 
-        &.favorite
-            content: url("../assets/img/svg/star.svg")
+        
     .watched
         position: absolute
         top: 8px
         right: 5px
+        cursor: pointer
 
         img
             width: 30px
@@ -116,4 +129,7 @@ export default {
         color: #fff
         margin: 0
         padding: 5px 0
+    &.favorited
+        .star
+            content: url("../assets/img/svg/star.svg")    
 </style>

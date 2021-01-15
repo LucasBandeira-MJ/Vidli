@@ -11,7 +11,7 @@
              <router-link :to="{'name': 'Home'}">Home</router-link>
           </li>
           <li>
-              <router-link :to="{'name': 'About'}">Add Video</router-link>
+              <router-link :to="{'name': 'upload'}">Add Video</router-link>
           </li>
       </ul>
     </nav>
