@@ -31,14 +31,14 @@ export default {
     top: 0
     left: 0
     width: 100%
-    background: #3a3a3a
+    background: $main-gray
     color: $highlighted
-    height: 65px
+    height: 55px
     z-index: 999
 
     .logo
         width: 80px
-        padding: 10px 15px 8px
+        padding: 5px 15px 8px
 
     ul
         display: flex

@@ -5,11 +5,11 @@
     
 
           <div class="watched">
-              <img @click="deleteVideo(videoID)" src="@/assets/img/svg/cross-icon.svg" alt="">
+              <img @click="deleteVideo(videoID)" src="@/assets/img/svg/cancel-icon.svg" alt="">
           </div>
       </div>
 
-        <a :href="videoURL" target="_blank">
+        <a href="#" @click="sendIframe" >
             <img class="thumb" :src="thumbnail" alt="thumbnail">
         </a>
       <p class="video-title">
@@ -47,9 +47,8 @@ export default {
             type: Boolean,
             default: false
         },
-        videoURL: {
-            type: String,
-            required: true
+        iframeString: {
+            type: String
         }
     },
     methods: {
@@ -59,11 +58,14 @@ export default {
             await axios.patch(`http://localhost:3000/api/${videoID}`, {
                 "favorited": this.favorited
             })
-            .then((res)=> console.log(res))
+            .catch((err) => console.log(err ))
         },
         async deleteVideo(videoID){
             await axios.delete(`http://localhost:3000/api/${videoID}`)
-            .then(location.reload())
+            .then(this.$router.go())
+        },
+        sendIframe() {
+            this.$emit("openPlayer", this.iframeString)
         }
     },
     data() {
@@ -79,6 +81,7 @@ export default {
     width: 280px
     background: #fff
     margin: 10px auto
+    border-radius: 5px
 
     &.yt
         border-top: 5px solid #c4302b 
@@ -113,6 +116,8 @@ export default {
         width: 100%
         text-align: center
         font-weight: bold
+        padding: 0px 10px
+        box-sizing: border-box
 
     .description
         font-size: 16px
