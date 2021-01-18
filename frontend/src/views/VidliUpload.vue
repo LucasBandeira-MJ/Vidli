@@ -18,11 +18,11 @@ export default {
   },
   methods: {
     async uploadVidli() {
-      await axios.post(`http://localhost:3000/api`, {
+      await axios.post(`api`, {
         "video_provider": "youtube",
         "video_url": this.videoURL
       }).then(function (res) {
-      console.log(res)
+      console.log('Video uploaded!')
       })
       .catch(function (err) {
         console.log(err)

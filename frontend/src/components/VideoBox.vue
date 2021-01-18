@@ -39,9 +39,7 @@ export default {
         headers: { 'Accept': 'application/json' }
       }
       try {
-        const res = await axios.get(`http://localhost:3000/api`, config);
-        console.log(res)
-
+        const res = await axios.get(`api`, config);
 
         this.videos = res.data
         this.createCards(this.videos)

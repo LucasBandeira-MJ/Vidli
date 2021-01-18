@@ -10,6 +10,7 @@
           <li>
              <router-link :to="{'name': 'Home'}">Home</router-link>
           </li>
+          |
           <li>
               <router-link :to="{'name': 'upload'}">Add Video</router-link>
           </li>
@@ -34,7 +35,11 @@ export default {
     background: $main-gray
     color: $highlighted
     height: 55px
-    z-index: 999
+    z-index: 999    
+    display: flex
+    align-items: center
+    justify-content: space-between
+
 
     .logo
         width: 80px
@@ -45,14 +50,14 @@ export default {
         list-style: none
         float: right
         margin-right: 15px
+        padding: 0
+        display: flex
+        align-items: center
     a
         color: $highlighted
         text-decoration: none
         display: inline-block
         padding: 5px 15px
         margin: 0
-
-    li:first-child
-        border-right: 1px solid $highlighted
 
 </style>

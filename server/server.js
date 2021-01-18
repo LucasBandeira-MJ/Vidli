@@ -17,4 +17,13 @@ app.use(cors())
 const apiRouter = require('./routes/api')
 app.use('/api', apiRouter)
 
+// Handle production
+if(process.env.NOVE_ENV === 'production') {
+    // Static folder
+    app.use(express.static(__dirname + '/public/'))
+
+    // Handle SPA
+    app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
+}
+
 app.listen(PORT, ()=> console.log(`Server started on port ${PORT}`))
